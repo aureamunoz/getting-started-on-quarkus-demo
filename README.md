@@ -2,8 +2,10 @@
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 This project has been used to present Quarkus in several conferences and meetups.
-The slides are available [here]()
-This project is the result of follow the [Quarkus getting started guide](https://quarkus.io/guides/getting-started)
+The slides are available [here](Descubriendo%20Quarkus%2C%20java%20sub-at%C3%B3mico%20en%20acci%C3%B3n%20-%20Focus%20Spring.pdf).
+
+This project is the result of following the [Quarkus getting started guide](https://quarkus.io/guides/getting-started).
+
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
 ## Running the application in dev mode
