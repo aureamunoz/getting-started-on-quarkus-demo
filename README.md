@@ -40,7 +40,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
         return "Madrid";
     }
     ```
-1. Open browser to `http://localhost:8080/hello/city`
+1. Open browser to http://localhost:8080/hello/city
 
 ### Configuration
 
@@ -56,7 +56,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
         return greeting;
     }
     ```    
-1. Open browser to `http://localhost:8080/hello
+1. Open browser to http://localhost:8080/hello
 1. We get an error because we have not added the property `greeting` to the configuration file
 1. Open the `application.properties` file and add:
     ```
@@ -76,7 +76,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
         return city.orElse("Barcelona");
     }
     ```
-1. Open browser to `http://localhost:8080/hello/city`
+1. Open browser to http://localhost:8080/hello/city
 
 ### Introduce a bean
 
@@ -103,7 +103,7 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
         return bean.greeting();
     }
     ```    
-3. Open browser to `http://localhost:8080/hello`
+3. Open browser to http://localhost:8080/hello
 
 ## Packaging and running the application
 
