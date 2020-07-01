@@ -1,8 +1,8 @@
 # getting-started project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
-This project has been used to present Quarkus in several conferences and meetups.
-The slides are available [here](Descubriendo%20Quarkus%2C%20java%20sub-at%C3%B3mico%20en%20acci%C3%B3n%20-%20Focus%20Spring.pdf).
+This project has been used to present Quarkus in Codemotion Madrid 2019.
+The slides are available [here](Codemotion 2019 Descubriendo Quarkus, java sub-atómico en acción.pdf).
 
 This project is the result of following the [Quarkus getting started guide](https://quarkus.io/guides/getting-started).
 
@@ -128,6 +128,13 @@ mvn compile quarkus:dev
     }
     ```    
 3. Open browser to `http://localhost:8080/hello`
+
+## Packaging and running the application
+
+The application can be packaged using `./mvnw package`.
+It produces the `spring-on-quarkus-1.0-SNAPSHOT-runner.jar` file in the `/target` directory.
+
+The application is now runnable using `java -jar target/spring-on-quarkus-1.0-SNAPSHOT-runner.jar`.
 
 ### Native packaging
 
