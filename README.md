@@ -15,7 +15,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 ```bash
 mvn io.quarkus:quarkus-maven-plugin:1.7.2.Final:create \
     -DprojectGroupId=org.acme \
-    -DprojectArtifactId=getting-started \
+    -DprojectArtifactId=getting-started-on-quarkus-demo \
     -DclassName="org.acme.getting.started.GreetingResource" \
     -Dpath="/hello"
 
