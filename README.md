@@ -13,7 +13,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:1.7.2.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started \
     -DclassName="org.acme.getting.started.GreetingResource" \
@@ -46,7 +46,8 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
 
 1. In the resource, add 
     ```
-    @ConfigProperty(name = "greeting") String greeting;
+    @ConfigProperty(name = "greeting")
+    String greeting;
     ```
 1. Change the hello method to return the greeting message:
     ```
@@ -65,7 +66,8 @@ mvn io.quarkus:quarkus-maven-plugin:1.5.2.Final:create \
 1. Refresh browser
 1. In the resource class, add an `Optional<String>`:
     ```
-    @ConfigProperty(name = "city") Optional<String> city;
+    @ConfigProperty(name = "city") 
+    Optional<String> city;
     ```
 1. Replace the `city` method with:
     ```
