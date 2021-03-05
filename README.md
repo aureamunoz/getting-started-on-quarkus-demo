@@ -119,7 +119,7 @@ The application is now runnable using `target/quarkus-app/quarkus-run.jar`.
 ## Creating a native executable
 
 You can create a native executable using: `./mvnw package -Pnative`.
-You can then execute your native executable with: `./target/getting-started-1.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/getting-started-1.0.0-SNAPSHOT-runner`
 
 Or, if you don't have GraalVM installed, you can run the native executable build in a container.
 Build the docker image with `docker build -f src/main/docker/Dockerfile.native -t quarkus/getting-started .`
