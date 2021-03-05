@@ -13,7 +13,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus:quarkus-maven-plugin:1.12.0.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:1.12.1.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -DclassName="org.acme.getting.started.GreetingResource" \
@@ -110,17 +110,19 @@ mvn io.quarkus:quarkus-maven-plugin:1.12.0.Final:create \
 ## Packaging and running the application
 
 The application can be packaged using `./mvnw package`.
-It produces the `getting-started-1.0-SNAPSHOT-runner.jar` file in the `/target` directory.
+It produces several outputs:
+- the `getting-started-1.0.0-SNAPSHOT.jar` file in the `/target` directory.
+- the quarkus-app directory which contains the `quarkus-run.jar`
 
-The application is now runnable using `java -jar target/getting-started-1.0-SNAPSHOT-runner.jar`.
+The application is now runnable using `target/quarkus-app/quarkus-run.jar`.
 
 ## Creating a native executable
 
 You can create a native executable using: `./mvnw package -Pnative`.
 You can then execute your native executable with: `./target/getting-started-1.0-SNAPSHOT-runner`
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: `./mvnw package -Pnative -Dquarkus.native.container-build=true`.
-Then, build the docker image with `docker build -f src/main/docker/Dockerfile.native -t quarkus/getting-started .`
+Or, if you don't have GraalVM installed, you can run the native executable build in a container.
+Build the docker image with `docker build -f src/main/docker/Dockerfile.native -t quarkus/getting-started .`
 Finally, run the container using `docker run -i --rm -p 8080:8080 quarkus/getting-started`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
