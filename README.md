@@ -114,7 +114,7 @@ It produces several outputs:
 - the `getting-started-1.0.0-SNAPSHOT.jar` file in the `/target` directory.
 - the quarkus-app directory which contains the `quarkus-run.jar`
 
-The application is now runnable using `target/quarkus-app/quarkus-run.jar`.
+The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
 ## Creating a native executable
 
