@@ -13,7 +13,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus:quarkus-maven-plugin:1.12.1.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:1.13.2.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -DclassName="org.acme.getting.started.GreetingResource" \
