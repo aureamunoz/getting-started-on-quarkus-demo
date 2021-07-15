@@ -23,7 +23,7 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return bean.greeting("Ramon");
+        return bean.greeting("World");
     }
 
     @GET
