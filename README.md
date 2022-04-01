@@ -20,69 +20,69 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
 
 ```
 1. Navigate to the directory and launch the application
-    ```bash
+```bash
     cd getting-started-on-quarkus-demo
     mvn compile quarkus:dev
-    ```
+```
 1. Open browser to http://localhost:8080
 1. Open browser to http://localhost:8080/hello
 1. Change the greeting message in the `HelloResource`, refresh browser
 
 ### Add method
 
-1. Add method: 
-    ```
+1. Add method:
+```java
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/city")
     public String city() {
         return "Madrid";
     }
-    ```
+```
 1. Open browser to http://localhost:8080/hello/city
 
 ### Configuration
 
-1. In the resource, add 
-    ```
+1. In the resource, add
+```java
     @ConfigProperty(name = "greeting")
     String greeting;
-    ```
-1. Change the hello method to return the greeting message:
-    ```
+```
+3. Change the hello method to return the greeting message:
+```java
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return greeting;
     }
-    ```    
+```    
 1. Open browser to http://localhost:8080/hello
 1. We get an error because we have not added the property `greeting` to the configuration file
 1. Open the `application.properties` file and add:
-    ```
+```properties
     greeting=Hola
-    ``` 
+``` 
 1. Refresh browser
 1. In the resource class, add an `Optional<String>`:
-    ```
+```java
     @ConfigProperty(name = "city") 
     Optional<String> city;
-    ```
+```
 1. Replace the `city` method with:
-    ```
+```java
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/city")
     public String city() {
         return city.orElse("Barcelona");
     }
-    ```
+```
 1. Open browser to http://localhost:8080/hello/city
 
 ### Introduce a bean
 
 1. Create class `MyBean` in the `org.acme.quickstart` package with the following content:
-    ```
+```java
     @ApplicationScoped
     public class MyBean {
     
@@ -92,18 +92,43 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
             return greeting;
         }
     }
-    ```            
+```            
 2. Update the content of `HelloResource` to become:
-    ```
-    @Inject 
+```java
+package org.acme.quickstart;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.Optional;
+
+@Path("/hello")
+public class GreetingResource {
+
+    @ConfigProperty(name = "city")
+    Optional<String> city;
+
+    @Inject
     MyBean bean;
-  
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
-        return bean.greeting();
+        return bean.greeting("World");
     }
-    ```    
+
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    @Path("/city")
+    public String city() {
+        return city.orElse("Barcelona");
+    }
+}
+```    
 3. Open browser to http://localhost:8080/hello
 
 ## Packaging and running the application
