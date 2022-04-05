@@ -1,4 +1,4 @@
-package org.acme.quickstart;
+package org.acme;
 
 
 import io.quarkus.test.junit.NativeImageTest;
