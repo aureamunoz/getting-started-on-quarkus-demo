@@ -1,8 +1,6 @@
 # getting-started project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
-This project has been used to present Quarkus in Codemotion Madrid 2019.
-The slides are available [here](Codemotion 2019 Descubriendo Quarkus%2C java sub-atómico en acción.pdf).
 
 This project is the result of following the [Quarkus getting started guide](https://quarkus.io/guides/getting-started).
 
@@ -33,11 +31,11 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
 1. Add method:
 ```java
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/city")
-    public String city() {
+@Produces(MediaType.TEXT_PLAIN)
+@Path("/city")
+public String city() {
         return "Madrid";
-    }
+        }
 ```
 1. Open browser to http://localhost:8080/hello/city
 
@@ -51,10 +49,10 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
 3. Change the hello method to return the greeting message:
 ```java
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
+@Produces(MediaType.TEXT_PLAIN)
+public String hello() {
         return greeting;
-    }
+        }
 ```    
 1. Open browser to http://localhost:8080/hello
 1. We get an error because we have not added the property `greeting` to the configuration file
@@ -71,31 +69,31 @@ mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
 1. Replace the `city` method with:
 ```java
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/city")
-    public String city() {
+@Produces(MediaType.TEXT_PLAIN)
+@Path("/city")
+public String city() {
         return city.orElse("Barcelona");
-    }
+        }
 ```
 1. Open browser to http://localhost:8080/hello/city
 
 ### Introduce a bean
 
-1. Create class `MyBean` in the `org.acme.quickstart` package with the following content:
+1. Create class `GreetingService` in the `org.acme` package with the following content:
 ```java
     @ApplicationScoped
-    public class MyBean {
-    
-        @ConfigProperty(name = "greeting") String greeting;
-    
-        public String greeting() {
-            return greeting;
-        }
+    public class GreetingService {
+
+    @ConfigProperty(name="greeting")
+    String greeting;
+
+    public String greeting(String name){
+        return  greeting +" "+name;
     }
 ```            
 2. Update the content of `HelloResource` to become:
 ```java
-package org.acme.quickstart;
+package org.acme;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -113,12 +111,13 @@ public class GreetingResource {
     Optional<String> city;
 
     @Inject
-    MyBean bean;
+    GreetingService greetingService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return bean.greeting("World");
+    @Path("/{name}")
+    public String hello(@PathParam("name") String name) {
+        return greetingService.greeting(name);
     }
 
     @GET
@@ -129,7 +128,40 @@ public class GreetingResource {
     }
 }
 ```    
-3. Open browser to http://localhost:8080/hello
+3. Open browser to http://localhost:8080/hello/quarkus
+
+### Testing
+
+The generated project contains a simple test. Edit the src/test/java/org/acme/GreetingResourceTest.java to match the following content with the last modifications:
+
+```java
+package org.acme;
+
+import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
+
+@QuarkusTest
+public class GreetingResourceTest {
+
+    @Test
+    public void testHelloEndpoint() {
+        given()
+          .when().get("/hello/quarkus")
+          .then()
+             .statusCode(200)
+             .body(is("Hola quarkus"));
+    }
+
+}
+```
+You can run these using Maven:
+
+```shell
+./mvnw test
+```
 
 ## Packaging and running the application
 
@@ -141,6 +173,16 @@ It produces several outputs:
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
 ## Creating a native executable
+
+1. Install GraalVM if you haven’t already.
+2. Configure the runtime environment. Set GRAALVM_HOME environment variable to the GraalVM installation directory, for example:
+```shell
+export GRAALVM_HOME=$HOME/Development/graalvm/
+```
+3. Add the GraalVM bin directory to the path
+```shell
+export PATH=$GRAALVM_HOME/bin:$PATH
+```
 
 You can create a native executable using: `./mvnw package -Pnative`.
 You can then execute your native executable with: `./target/getting-started-on-quarkus-demo-1.0-SNAPSHOT-runner`
