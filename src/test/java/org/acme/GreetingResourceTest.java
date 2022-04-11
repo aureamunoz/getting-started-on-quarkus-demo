@@ -12,10 +12,10 @@ public class GreetingResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
-          .when().get("/hello")
+          .when().get("/hello/world")
           .then()
              .statusCode(200)
-             .body(is("Hola World"));
+             .body(is("Hola world"));
     }
 
 }
