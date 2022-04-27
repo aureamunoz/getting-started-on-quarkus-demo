@@ -11,7 +11,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:2.7.5.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:2.8.2.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
