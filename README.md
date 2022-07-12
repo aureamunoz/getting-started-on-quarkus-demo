@@ -11,7 +11,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:2.8.2.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:2.10.2.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
@@ -48,7 +48,7 @@ public String city() {
 ```
 3. Change the hello method to return the greeting message:
 ```java
-    @GET
+@GET
 @Produces(MediaType.TEXT_PLAIN)
 public String hello() {
         return greeting;
@@ -187,7 +187,7 @@ export PATH=$GRAALVM_HOME/bin:$PATH
 You can create a native executable using: `./mvnw package -Pnative`.
 You can then execute your native executable with: `./target/getting-started-on-quarkus-demo-1.0-SNAPSHOT-runner`
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container.
+Or you can run the native executable build in a container.
 Build the docker image with `docker build -f src/main/docker/Dockerfile.native -t $USER/getting-started .`
 Finally, run the container using `docker run -i --rm -p 8080:8080 $USER/getting-started`
 
