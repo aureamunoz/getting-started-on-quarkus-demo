@@ -16,12 +16,18 @@ public class GreetingResource {
     @Inject
     GreetingService greetingService;
 
-    @ConfigProperty(name="city")
+    @ConfigProperty(name = "city")
     Optional<String> city;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+    public String hello() {
+        return "Hello World";
+    }
+
+    @GET
     @Path("/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
     public String hello(@PathParam("name") String name) {
         return greetingService.greeting(name);
     }

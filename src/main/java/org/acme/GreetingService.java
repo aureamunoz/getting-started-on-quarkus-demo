@@ -7,10 +7,10 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class GreetingService {
 
-    @ConfigProperty(name="greeting")
+    @ConfigProperty(name = "greeting")
     String greeting;
 
-    public String greeting(String name){
+    public String greeting(String name) {
         return greeting + " " + name;
     }
 }

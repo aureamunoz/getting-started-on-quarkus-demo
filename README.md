@@ -194,6 +194,3 @@ Finally, run the container using `docker run -i --rm -p 8080:8080 $USER/getting-
 Note: don't forget to replace $USER by your own
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
-
-
-
