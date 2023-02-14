@@ -163,6 +163,115 @@ You can run these using Maven:
 ./mvnw test
 ```
 
+## Generating JAX-RS resources with Panache
+
+A lot of web applications are monotonous CRUD applications with REST APIs that are tedious to write. 
+REST Data with Panache extension can generate the basic CRUD endpoints for your entities and repositories.
+
+### Setting up REST Data with Panache
+Add the required dependencies to your build file
+
+```xml
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-jdbc-postgresql</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+</dependency>
+
+```
+Hibernate ORM REST Data with Panache extension, a JDBC postgresql driver extension and the RESTEasy reactive JSON serialization extensions.
+
+### Implement the Panache entities and/or repositories
+
+We will use the active record pattern. Create the `Book` entity and annotate it with `@Entity` as follows: 
+
+````java
+package org.acme;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Book extends PanacheEntity {
+
+    public String name;
+    public Integer publicationYear;
+}
+````
+
+### Define the interfaces for generation
+
+REST Data with Panache generates JAX-RS resources based on the interfaces available in your application. 
+For that, we need to create the following interface: 
+
+````java
+package org.acme;
+
+import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
+
+public interface BookResource extends PanacheEntityResource<Book, Long> {
+}
+````
+
+The generated resources will provide the CRUD methods to access your `Book` entity. 
+
+### Set up the data base and some data in it
+
+Open the `application.properties` file and add database access configuration
+
+    ```
+    quarkus.datasource.jdbc.url=jdbc:postgresql:quarkus_test
+    quarkus.datasource.db-kind=postgresql
+    quarkus.datasource.username=quarkus_test
+    quarkus.datasource.password=quarkus_test
+    quarkus.datasource.jdbc.min-size=2
+    quarkus.datasource.jdbc.max-size=8
+    
+    ```
+
+Note that this step is optional in `dev` mode.
+
+1. Add database population script `import.sql` in resources folder with the following content
+
+    ```
+    INSERT INTO book(id, name, publicationYear) VALUES (1, 'Sapiens' , 2011);
+    INSERT INTO book(id, name, publicationYear) VALUES (2, 'Homo Deus' , 2015);
+    INSERT INTO book(id, name, publicationYear) VALUES (3, 'Enlightenment Now' , 2018);
+    INSERT INTO book(id, name, publicationYear) VALUES (4, 'Factfulness' , 2018);
+    INSERT INTO book(id, name, publicationYear) VALUES (5, 'Sleepwalkers' , 2012);
+    INSERT INTO book(id, name, publicationYear) VALUES (6, 'The Silk Roads' , 2015);
+    
+    ```
+
+1. Configure the loading of data adding the following properties in the `application.properties` file
+
+    ```
+    quarkus.hibernate-orm.database.generation=drop-and-create
+    quarkus.hibernate-orm.sql-load-script=import.sql
+    ```
+
+Note that this step is optional in `dev` mode.
+
+1. At last, start a postgresql database by running the following command:
+
+    ```
+    docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:14.5
+    
+    ```
+
+Note that this step is optional in `dev` mode.
+
+1. Open browser to http://localhost:8080/book
+
+
 ## Packaging and running the application
 
 The application can be packaged using `./mvnw package`.
