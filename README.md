@@ -51,7 +51,7 @@ public String city() {
 @GET
 @Produces(MediaType.TEXT_PLAIN)
 public String hello() {
-        return greeting;
+        return greeting + " world";
         }
 ```    
 1. Open browser to http://localhost:8080/hello
@@ -226,46 +226,40 @@ The generated resources will provide the CRUD methods to access your `Book` enti
 ### Set up the data base and some data in it
 
 Open the `application.properties` file and add database access configuration
-
-    ```
+````properties
     quarkus.datasource.jdbc.url=jdbc:postgresql:quarkus_test
     quarkus.datasource.db-kind=postgresql
     quarkus.datasource.username=quarkus_test
     quarkus.datasource.password=quarkus_test
     quarkus.datasource.jdbc.min-size=2
     quarkus.datasource.jdbc.max-size=8
-    
-    ```
+````
 
 Note that this step is optional in `dev` mode.
 
 1. Add database population script `import.sql` in resources folder with the following content
-
-    ```
+````properties
     INSERT INTO book(id, name, publicationYear) VALUES (1, 'Sapiens' , 2011);
     INSERT INTO book(id, name, publicationYear) VALUES (2, 'Homo Deus' , 2015);
     INSERT INTO book(id, name, publicationYear) VALUES (3, 'Enlightenment Now' , 2018);
     INSERT INTO book(id, name, publicationYear) VALUES (4, 'Factfulness' , 2018);
     INSERT INTO book(id, name, publicationYear) VALUES (5, 'Sleepwalkers' , 2012);
     INSERT INTO book(id, name, publicationYear) VALUES (6, 'The Silk Roads' , 2015);
-    
-    ```
+````
 
 1. Configure the loading of data adding the following properties in the `application.properties` file
-
-    ```
+```properties
     quarkus.hibernate-orm.database.generation=drop-and-create
     quarkus.hibernate-orm.sql-load-script=import.sql
-    ```
+```
 
 Note that this step is optional in `dev` mode.
 
 1. At last, start a postgresql database by running the following command:
 
-    ```
+````properties
     docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:14.5
-    
-    ```
+````
 
 Note that this step is optional in `dev` mode.
 

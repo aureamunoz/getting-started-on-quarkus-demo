@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  quarkus-db:
+    image: postgres:14.5
+    restart: always
+    environment:
+      - POSTGRES_USER=quarkus_test
+      - POSTGRES_PASSWORD=quarkus_test
+      - POSTGRES_DB=quarkus_test
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - '5432:5432'
+  quarkus-getting-started-service:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.native
+    image: quarkus/getting-started:native
+    mem_limit: 128m
+    environment:
+      - QUARKUS_DATASOURCE_URL=jdbc:postgresql://quarkus-db:5432/quarkus_test
+    ports:
+      - "8080:8080"  # the HTTP endpoint
+    depends_on:
+      quarkus-db:
+        condition: service_healthy
+    networks:
+      - quarkus
+
+networks:
+  quarkus:
+    driver: bridge
