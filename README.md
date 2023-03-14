@@ -11,7 +11,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:2.16.2.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:2.16.4.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
@@ -300,18 +300,5 @@ If you want to learn more about building native executables, please consult http
 
 
 ## Deploy to Kubernetes
-config:
 
-````properties
-
-# Kubernetes Client
-quarkus.kubernetes-client.trust-certs=true
-quarkus.kubernetes-client.namespace=aurins
-
-# Expose the service when deployed
-quarkus.kubernetes.ingress.expose=true
-
-quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000
-quarkus.container-image.group=auri
-quarkus.container-image.tag=1.0-SNAPSHOT
-````
+Check the info in [this branch](https://github.com/aureamunoz/getting-started-on-quarkus-demo/tree/only-hello-service#deploy-the-application-in-a-kubernetes-cluster)
