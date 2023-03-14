@@ -297,3 +297,21 @@ Finally, run the container using `docker run -i --rm -p 8080:8080 $USER/getting-
 Note: don't forget to replace $USER by your own
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+
+
+## Deploy to Kubernetes
+config:
+
+````properties
+
+# Kubernetes Client
+quarkus.kubernetes-client.trust-certs=true
+quarkus.kubernetes-client.namespace=aurins
+
+# Expose the service when deployed
+quarkus.kubernetes.ingress.expose=true
+
+quarkus.container-image.registry=image-registry.openshift-image-registry.svc:5000
+quarkus.container-image.group=auri
+quarkus.container-image.tag=1.0-SNAPSHOT
+````

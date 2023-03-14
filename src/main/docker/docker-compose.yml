@@ -2,6 +2,7 @@ version: '3.7'
 services:
   quarkus-db:
     image: postgres:14.5
+    container_name: quarkus-db
     restart: always
     environment:
       - POSTGRES_USER=quarkus_test
@@ -20,15 +21,15 @@ services:
     image: quarkus/getting-started:native
     mem_limit: 128m
     environment:
-      - QUARKUS_DATASOURCE_URL=jdbc:postgresql://quarkus-db:5432/quarkus_test
+      QUARKUS_DATASOURCE_REACTIVE_URL: postgresql://quarkus-db:5432/quarkus_test
+      QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: validate
+      QUARKUS_DATASOURCE_USERNAME: quarkus_test
+      QUARKUS_DATASOURCE_PASSWORD: quarkus_test
+      QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT: no-file
     ports:
       - "8080:8080"  # the HTTP endpoint
-    depends_on:
-      quarkus-db:
-        condition: service_healthy
+    restart: on-failure
     networks:
-      - quarkus
-
-networks:
-  quarkus:
-    driver: bridge
+      default:
+        aliases:
+          - rest-heroes
