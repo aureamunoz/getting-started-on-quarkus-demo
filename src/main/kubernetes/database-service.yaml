@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: upload-database
+  name: quarkus-database
   annotations:
     template.openshift.io/expose-uri: 'postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}'
   managedFields:
@@ -39,4 +39,4 @@ spec:
       targetPort: 5432
   type: ClusterIP
   selector:
-    name: upload-database
+    name: quarkus-database
