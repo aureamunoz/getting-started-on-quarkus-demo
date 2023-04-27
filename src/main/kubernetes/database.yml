@@ -218,11 +218,11 @@ spec:
             failureThreshold: 3
           env:
             - name: POSTGRESQL_USER
-              value: bob
+              value: book
             - name: POSTGRESQL_PASSWORD
-              value: sinclar
+              value: book
             - name: POSTGRESQL_DATABASE
-              value: quarkus-database
+              value: quarkus-library
           securityContext:
             capabilities: {}
             privileged: false

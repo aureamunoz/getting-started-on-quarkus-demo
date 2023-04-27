@@ -2,12 +2,12 @@ version: '3.7'
 services:
   quarkus-db:
     image: postgres:14.5
-    container_name: quarkus-db
+    container_name: quarkus-database
     restart: always
     environment:
-      - POSTGRES_USER=quarkus_test
-      - POSTGRES_PASSWORD=quarkus_test
-      - POSTGRES_DB=quarkus_test
+      - POSTGRES_USER=book
+      - POSTGRES_PASSWORD=book
+      - POSTGRES_DB=quarkus-library
     logging:
       options:
         max-size: 10m
@@ -21,10 +21,10 @@ services:
     image: quarkus/getting-started:native
     mem_limit: 128m
     environment:
-      QUARKUS_DATASOURCE_REACTIVE_URL: postgresql://quarkus-db:5432/quarkus_test
+      QUARKUS_DATASOURCE_REACTIVE_URL: postgresql://quarkus-database:5432/quarkus-library
       QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: validate
-      QUARKUS_DATASOURCE_USERNAME: quarkus_test
-      QUARKUS_DATASOURCE_PASSWORD: quarkus_test
+      QUARKUS_DATASOURCE_USERNAME: book
+      QUARKUS_DATASOURCE_PASSWORD: book
       QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT: no-file
     ports:
       - "8080:8080"  # the HTTP endpoint

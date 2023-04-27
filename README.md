@@ -225,17 +225,9 @@ The generated resources will provide the CRUD methods to access your `Book` enti
 
 ### Set up the data base and some data in it
 
-Open the `application.properties` file and add database access configuration
-````properties
-    quarkus.datasource.jdbc.url=jdbc:postgresql:quarkus_test
-    quarkus.datasource.db-kind=postgresql
-    quarkus.datasource.username=quarkus_test
-    quarkus.datasource.password=quarkus_test
-    quarkus.datasource.jdbc.min-size=2
-    quarkus.datasource.jdbc.max-size=8
-````
-
-Note that this step is optional in `dev` mode.
+As Quarkus supports the automatic provisioning of unconfigured services in development and test mode, we don't need at the moment to configure anything regarding the database access.
+Quarkus will automatically start a Postgresql service and wire up your application to use this service.
+However, this database is empty. To add some books, follow the next step:
 
 1. Add database population script `import.sql` in resources folder with the following content
 ````properties
@@ -247,26 +239,37 @@ Note that this step is optional in `dev` mode.
     INSERT INTO book(id, name, publicationYear) VALUES (6, 'The Silk Roads' , 2015);
 ````
 
-1. Configure the loading of data adding the following properties in the `application.properties` file
-```properties
-    quarkus.hibernate-orm.database.generation=drop-and-create
-    quarkus.hibernate-orm.sql-load-script=import.sql
-```
+1. Open browser to http://localhost:8080/book
 
-Note that this step is optional in `dev` mode.
+#### Database configuration for PROD environment
+
+Open the `application.properties` file and add database access configuration
+````properties
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/quarkus-library
+%prod.quarkus.datasource.username=book
+%prod.quarkus.datasource.password=book
+
+%prod.quarkus.datasource.jdbc.min-size=2
+%prod.quarkus.datasource.jdbc.max-size=8
+````
+
+1. Configure the loading of data adding the following properties in the `application.properties` file
+
+```properties
+%prod.quarkus.hibernate-orm.sql-load-script=import.sql
+%prod.quarkus.hibernate-orm.database.generation=drop-and-create
+```
 
 1. At last, start a postgresql database by running the following command:
 
-````properties
-    docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus_test -e POSTGRES_USER=quarkus_test -e POSTGRES_PASSWORD=quarkus_test -e POSTGRES_DB=quarkus_test -p 5432:5432 postgres:14.5
-````
+```bash
+docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus-database -e POSTGRES_USER=book -e POSTGRES_PASSWORD=book -e POSTGRES_DB=quarkus-library -p 5432:5432 postgres:14.5
+```
 
-Note that this step is optional in `dev` mode.
-
-1. Open browser to http://localhost:8080/book
+As already mentioned, these steps are optional in `dev` and `test` modes.
 
 
-## Packaging and running the application
+## Packaging and running the application (prod profile)
 
 The application can be packaged using `./mvnw package`.
 It produces several outputs:
@@ -287,7 +290,7 @@ export GRAALVM_HOME=$HOME/Development/graalvm/
 export PATH=$GRAALVM_HOME/bin:$PATH
 ```
 
-You can create a native executable using: `./mvnw package -Pnative`.
+You can create a native executable using: `./mvnw package -Pnative` or `quarkus build -Dnative`
 You can then execute your native executable with: `./target/getting-started-on-quarkus-demo-1.0-SNAPSHOT-runner`
 
 Or you can run the native executable build in a container.
@@ -300,8 +303,22 @@ If you want to learn more about building native executables, please consult http
 
 ## Deploy to OpenShift cluster
 
+First, deploy a Postgresql database using the resources provided in the `kubernetes` folder.
+
 ```bash
 oc apply -f ../kubernetes
+```
+This will start a postgresql database running in the port 5432.
+
+Then, we change the quarkus datasource configuration in order to point to the recently deployed database:
+
+````properties
+%prod.quarkus.datasource.jdbc.url=jdbc:postgresql://quarkus-database:5432/quarkus-library
+````
+
+Finally, you can proceed to deploy the application by running the following magic command:
+
+```bash
 quarkus deploy openshift --image-build -Dquarkus.openshift.route.expose=true
 ```
 
