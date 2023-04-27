@@ -1,7 +1,7 @@
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: upload-database
+  name: quarkus-database
   generation: 2
   managedFields:
     - manager: openshift-controller-manager
@@ -115,7 +115,7 @@ metadata:
               'f:terminationGracePeriodSeconds': {}
               'f:volumes':
                 .: {}
-                'k:{"name":"upload-database-data"}':
+                'k:{"name":"quarkus-database-data"}':
                   .: {}
                   'f:emptyDir': {}
                   'f:name': {}
@@ -179,17 +179,17 @@ spec:
   revisionHistoryLimit: 10
   test: false
   selector:
-    name: upload-database
-    app: upload-database
+    name: quarkus-database
+    app: quarkus-database
   template:
     metadata:
       creationTimestamp: null
       labels:
-        name: upload-database
-        app: upload-database
+        name: quarkus-database
+        app: quarkus-database
     spec:
       volumes:
-        - name: upload-database-data
+        - name: quarkus-database-data
           emptyDir: {}
       containers:
         - resources:
@@ -218,20 +218,11 @@ spec:
             failureThreshold: 3
           env:
             - name: POSTGRESQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: upload-service
-                  key: database-user
+              value: bob
             - name: POSTGRESQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: upload-service
-                  key: database-password
+              value: sinclar
             - name: POSTGRESQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: upload-service
-                  key: database-name
+              value: quarkus-database
           securityContext:
             capabilities: {}
             privileged: false
@@ -240,7 +231,7 @@ spec:
               protocol: TCP
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: upload-database-data
+            - name: quarkus-database-data
               mountPath: /var/lib/pgsql/data
           terminationMessagePolicy: File
           image: >-
