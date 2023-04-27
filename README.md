@@ -298,6 +298,13 @@ Note: don't forget to replace $USER by your own
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
 
+## Deploy to OpenShift cluster
+
+```bash
+oc apply -f ../kubernetes
+quarkus deploy openshift --image-build -Dquarkus.openshift.route.expose=true
+```
+
 
 ## Deploy to Kubernetes
 
