@@ -11,7 +11,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 1. Generate project
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:3.0.3.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:3.1.0.Final:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
@@ -290,7 +290,7 @@ export GRAALVM_HOME=$HOME/Development/graalvm/
 export PATH=$GRAALVM_HOME/bin:$PATH
 ```
 
-You can create a native executable using: `./mvnw package -Pnative` or `quarkus build -Dnative`
+You can create a native executable using: `./mvnw package -Pnative` or `quarkus build --native`
 You can then execute your native executable with: `./target/getting-started-on-quarkus-demo-1.0-SNAPSHOT-runner`
 
 Or you can run the native executable build in a container.
