@@ -32,12 +32,10 @@ public class GreetingResource {
         return greetingService.greeting(name);
     }
 
-
-
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/city")
-    public String city(){
+    public String city() {
         return city.orElse("Barcelona");
     }
 }
