@@ -1,4 +1,4 @@
-name: SmallRye Build
+name: Getting Started on Quarkus Build
 
 on:
   push:
