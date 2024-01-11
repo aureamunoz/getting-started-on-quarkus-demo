@@ -10,8 +10,16 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 ### Project generation and run
 
 1. Generate project
+
+Go to the [code.quarkus.io](https://code.quarkus.io) site. 
+Select the RestEASY reactive extension. 
+Modify the default group and artifact names if needed.
+Generate the application and download .zip file.
+
+Alternatively, you can also generate the project by running the following command: 
+
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:3.1.0.Final:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:3.6.4:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
