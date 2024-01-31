@@ -26,9 +26,9 @@ jobs:
     strategy:
       matrix:
         java: [
-          { 'version': '11', 'opts': '' },
           { 'version': '17', 'opts': '' },
-          { 'version': '20', 'opts': '' }
+          { 'version': '20', 'opts': '' },
+          { 'version': '21', 'opts': '' }
         ]
     name: build with jdk ${{matrix.java.version}}
 
@@ -51,9 +51,9 @@ jobs:
     strategy:
       matrix:
         java: [
-          { 'version': '11', 'opts': '' },
           { 'version': '17', 'opts': '' },
-          { 'version': '20', 'opts': '' }
+          { 'version': '20', 'opts': '' },
+          { 'version': '21', 'opts': '' }
         ]
     name: build with jdk ${{matrix.java.version}} windows
 
@@ -72,37 +72,3 @@ jobs:
 #        Skip integration tests. TestContainers does not support Windows Server 2019: https://github.com/testcontainers/testcontainers-java/issues/2960
         run: mvn -B formatter:validate install --file pom.xml ${{matrix.java.opts}}
 
-#  compatibility:
-#    runs-on: ubuntu-20.04
-#    name: Compatibility Check
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-java@v4
-#        with:
-#          java-version: 17
-#          distribution: temurin
-#          cache: maven
-#      - name: Compatibility Check
-#        run: mvn install -DskipTests && mvn install revapi:check@check-compatibility -DskipTests -fae -pl \!bom
-#
-#  quality:
-#    needs: [build]
-#    if: github.event_name == 'push' && github.repository_owner == 'smallrye'
-#    runs-on: ubuntu-latest
-#    name: quality
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#      - uses: actions/setup-java@v4
-#        with:
-#          distribution: temurin
-#          java-version: 17
-#          cache: maven
-#
-#      - name: sonar
-#        env:
-#          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-#          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
-#        run: mvn -B install --file pom.xml -Pcoverage javadoc:javadoc sonar:sonar -Dsonar.login=$SONAR_TOKEN -Drevapi.skip=true
