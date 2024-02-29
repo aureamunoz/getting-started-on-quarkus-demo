@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.orm.rest.data;
 
 import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
 import io.quarkus.rest.data.panache.MethodProperties;

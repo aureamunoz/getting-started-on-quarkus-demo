@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.getting.started;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
