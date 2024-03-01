@@ -100,9 +100,11 @@ public String city() {
     }
 ```            
 2. Update the content of `HelloResource` to become:
+
 ```java
 package org.acme;
 
+import org.acme.getting.started.GreetingService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
@@ -218,12 +220,13 @@ public class Book extends PanacheEntity {
 ### Define the interfaces for generation
 
 REST Data with Panache generates JAX-RS resources based on the interfaces available in your application. 
-For that, we need to create the following interface: 
+For that, we need to create the following interface:
 
 ````java
 package org.acme;
 
 import io.quarkus.hibernate.orm.rest.data.panache.PanacheEntityResource;
+import org.acme.orm.rest.data.Book;
 
 public interface BookResource extends PanacheEntityResource<Book, Long> {
 }
