@@ -19,7 +19,7 @@ Generate the application and download .zip file.
 Alternatively, you can also generate the project by running the following command: 
 
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:3.6.5:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:3.8.2:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
     -Dextensions="resteasy"
