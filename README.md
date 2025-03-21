@@ -274,7 +274,7 @@ Open the `application.properties` file and add database access configuration
 1. At last, start a postgresql database by running the following command:
 
 ```bash
-docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name quarkus-database -e POSTGRES_USER=book -e POSTGRES_PASSWORD=book -e POSTGRES_DB=quarkus-library -p 5432:5432 postgres:14.5
+docker run --ulimit memlock=-1:-1 -it --rm=true --name quarkus-database -e POSTGRES_USER=book -e POSTGRES_PASSWORD=book -e POSTGRES_DB=quarkus-library -p 5432:5432 postgres:17.4
 ```
 
 As already mentioned, these steps are optional in `dev` and `test` modes.
