@@ -12,17 +12,17 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 1. Generate project
 
 Go to the [code.quarkus.io](https://code.quarkus.io) site. 
-Select the RestEASY reactive extension. 
+Select the `rest`, `rest-jackson` and `smallrye-openapi`extensions. 
 Modify the default group and artifact names if needed.
 Generate the application and download .zip file.
 
 Alternatively, you can also generate the project by running the following command: 
 
 ```bash
-mvn io.quarkus.platform:quarkus-maven-plugin:3.8.2:create \
+mvn io.quarkus.platform:quarkus-maven-plugin:3.19.4:create \
     -DprojectGroupId=org.acme \
     -DprojectArtifactId=getting-started-on-quarkus-demo \
-    -Dextensions="resteasy"
+    -Dextensions="rest, rest-jackson, smallrye-openapi"
 
 ```
 1. Navigate to the directory and launch the application
@@ -284,10 +284,11 @@ As already mentioned, these steps are optional in `dev` and `test` modes.
 
 The application can be packaged using `./mvnw package`.
 It produces several outputs:
-- the `getting-started-on-quarkus-demo-1.0-SNAPSHOT.jar` file in the `/target` directory.
-- the quarkus-app directory which contains the `quarkus-run.jar`
+- the `getting-started-on-quarkus-demo-1.0-SNAPSHOT.jar` file, the regular artifact produced by the Maven build, in the `/target` directory.
+- the quarkus-app directory which contains the `quarkus-run.jar`, an executable jar.
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+If you want to deploy your application somewhere (typically in a container), you need to deploy the whole quarkus-app directory.
 
 ## Creating a native executable
 
